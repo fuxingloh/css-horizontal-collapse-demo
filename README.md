@@ -1,11 +1,12 @@
-# Vue Lazy CSS
+# CSS Oddities
 
-How lazy loaded CSS can affect your horizontal scroll components. Micro-site
-for [vue-horizontal](https://vue-horizontal.fuxing.dev)
-and
-[vue-horizontal-list](https://github.com/fuxingloh/vue-horizontal-list)
-implementation and the oddities of CSS implementation.
-[Nuxt](https://nuxtjs.org/) was used for this micro-site, but the principles are mostly the same for all vue 
+### [https://css-oddities.fuxing.dev](https://css-oddities.fuxing.dev)
+
+The oddities of CSS and how it can affect your rendered components.
+
+A micro-site for the oddities of CSS and with extra interest on how it can affect horizontal content.
+With examples written for [vue-horizontal](https://vue-horizontal.fuxing.dev).
+[Nuxt](https://nuxtjs.org/) was used for this micro-site, but the principles are mostly the same for all vue or css 
 implementation.
 
 ## Build Setup
