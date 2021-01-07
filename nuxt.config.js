@@ -1,4 +1,4 @@
-const title = 'Vue Lazy CSS - Horizontal';
+const title = 'CSS Oddities';
 const description = 'How lazy loaded CSS can affect your horizontal scroll components and etc.'
 
 export default {
@@ -20,7 +20,8 @@ export default {
   css: [],
   plugins: [
     '~/plugins/gtag.client',
-    '~/plugins/smoothscroll.client'
+    '~/plugins/smoothscroll.client',
+    '~/plugins/vue-horizontal',
   ],
   components: true,
   buildModules: [
