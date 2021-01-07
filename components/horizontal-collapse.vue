@@ -10,7 +10,7 @@
 
     <div class="mt-4 flex items-center">
       Toggling
-      <button :class="{toggled: !items[index].collapsed}">Toggle {{index}}</button>
+      <button :class="{toggled: !items[index].collapsed}">Toggle {{ index }}</button>
       <p>
         in <b>{{ countdown }}</b> seconds.
       </p>
@@ -40,8 +40,20 @@
 <script lang="ts">
 import Vue from 'vue';
 
+interface Item {
+  img: string;
+  collapsed: boolean;
+}
+
+interface HorizontalCollapse {
+  items: Item[];
+  countdown: number;
+  index: number;
+  intervalId: any;
+}
+
 export default Vue.extend({
-  data() {
+  data(): HorizontalCollapse {
     return {
       items: [
         {img: '/img/hanson-lu-ShUDNP6EV-I-unsplash.jpg', collapsed: true},
@@ -70,10 +82,13 @@ export default Vue.extend({
       }
     }, 1000)
   },
+  destroyed() {
+    clearInterval(this.intervalId)
+  },
   methods: {
-    onScrollDebounce({left}) {
-      this.$refs.a.scrollToLeft(left)
-      this.$refs.b.scrollToLeft(left)
+    onScrollDebounce({left}: any) {
+      const horizontals: any[] = [this.$refs.a, this.$refs.b]
+      horizontals.forEach(h => h.scrollToLeft(left))
     },
   }
 })
