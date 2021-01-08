@@ -1,5 +1,5 @@
-const title = 'CSS Oddities';
-const description = 'How lazy loaded CSS can affect your horizontal scroll components and etc.'
+const title = 'CSS Horizontal Collapse';
+const description = 'How CSS horizontal collapse can cause oddities in rendered horizontal components.'
 
 export default {
   target: 'static',
