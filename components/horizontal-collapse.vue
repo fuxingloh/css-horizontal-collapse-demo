@@ -8,15 +8,18 @@
       </button>
     </div>
 
-    <div class="mt-4 flex items-center">
-      Toggling
-      <button :class="{toggled: !items[index].collapsed}">Toggle {{ index }}</button>
-      <p>
-        in <b>{{ countdown }}</b> seconds.
-      </p>
+    <div class="mt-4">
+      <div class="flex items-center" v-for="auto in autos" :key="auto.index">
+        Toggling
+        <button :class="{toggled: !items[auto.index].collapsed}">Toggle {{ auto.index }}</button>
+        <p>
+          in <b>{{ auto.countdown }}</b> seconds.
+        </p>
+      </div>
     </div>
 
-    <div class="mt-8">
+    <div>
+      <h4>For reference, mirroring collapsed position and how it moves when content is available.</h4>
       <vue-horizontal responsive ref="a" @scroll-debounce="onScrollDebounce">
         <div class="item" v-for="(item, index) in items" :key="index">
           {{ index }}
@@ -24,9 +27,23 @@
       </vue-horizontal>
     </div>
 
-    <div class="mt-8">
+    <div>
+      <h4>Horizontal collapsed, causes oddities.</h4>
       <vue-horizontal responsive ref="b" @scroll-debounce="onScrollDebounce">
         <div class="item relative" v-for="(item, index) in items" :key="index">
+          <img :src="item.collapsed ? '' : item.img">
+          <div class="absolute bg-gray-800 bg-opacity-25 inset-0 items-center justify-center">
+            <div>{{ index }}</div>
+          </div>
+        </div>
+      </vue-horizontal>
+    </div>
+
+    <div>
+      <h4>With min-height, fixes it issues.</h4>
+
+      <vue-horizontal responsive ref="c" @scroll-debounce="onScrollDebounce">
+        <div class="item relative non-collapsed" v-for="(item, index) in items" :key="index">
           <img :src="item.collapsed ? '' : item.img">
           <div class="absolute bg-gray-800 bg-opacity-25 inset-0 items-center justify-center">
             <div>{{ index }}</div>
@@ -45,10 +62,15 @@ interface Item {
   collapsed: boolean;
 }
 
+interface Auto {
+  index: number;
+  countdown: number;
+  interval: number;
+}
+
 interface HorizontalCollapse {
   items: Item[];
-  countdown: number;
-  index: number;
+  autos: Auto[];
   intervalId: any;
 }
 
@@ -67,19 +89,23 @@ export default Vue.extend({
         {img: '/img/david-vives-_cbdlNbWvWg-unsplash.jpg', collapsed: true},
         {img: '/img/benn-mcguinness-_FKNQ9jWARU-unsplash.jpg', collapsed: true},
       ],
-      countdown: 10,
-      index: 4,
+      autos: [
+        {index: 3, interval: 8, countdown: 8},
+        {index: 6, interval: 19, countdown: 19},
+      ],
       intervalId: null,
     }
   },
   mounted() {
     this.intervalId = setInterval(() => {
-      this.countdown -= 1
+      this.autos.forEach(auto => {
+        auto.countdown -= 1
 
-      if (this.countdown === 0) {
-        this.items[this.index].collapsed = !this.items[this.index].collapsed
-        this.countdown = 10
-      }
+        if (auto.countdown === 0) {
+          this.items[auto.index].collapsed = !this.items[auto.index].collapsed
+          auto.countdown = auto.interval
+        }
+      })
     }, 1000)
   },
   destroyed() {
@@ -105,9 +131,17 @@ button.toggled {
   @apply bg-gray-800 text-white;
 }
 
+h4 {
+  @apply text-xl font-semibold mt-10 mb-4;
+}
+
 .item {
   min-height: initial !important;
   @apply bg-gray-800 rounded overflow-hidden;
   @apply font-semibold text-xl text-white text-center leading-loose;
+}
+
+.item.non-collapsed {
+  min-height: 1px !important;
 }
 </style>

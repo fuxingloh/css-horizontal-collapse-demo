@@ -2,7 +2,7 @@
   <div>
     <header>
       <div class="container">
-        <h4>Vue Horizontal: CSS Oddities</h4>
+        <h4>CSS Horizontal Collapse</h4>
       </div>
     </header>
 
